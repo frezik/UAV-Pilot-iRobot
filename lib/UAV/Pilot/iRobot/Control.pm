@@ -11,10 +11,24 @@ with 'UAV::Pilot::Logger';
 
 sub throttle
 {
+    my ($self, $rate) = @_;
+    $self->driver->forward( $rate );
+    return 1;
 }
 
 sub turn
 {
+    my ($self, $rate) = @_;
+    my $abs_rate = abs $rate;
+
+    if( $rate > 0 ) {
+        $self->driver->rotateRight( $abs_rate );
+    }
+    else {
+        $self->driver->rotateLeft( $abs_rate );
+    }
+
+    return 1;
 }
 
 
